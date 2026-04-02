@@ -3,7 +3,7 @@ import { FiSend } from "react-icons/fi";
 const Banner = () => {
   return (
     <div className="relative bg-black flex justify-center items-center min-h-screen">
-      <div className="w-[400px] lg:w-[900px] mx-auto relative z-5 p-4 ">
+      <div className="w-[400px] lg:w-[900px] mx-auto relative z-5 p-4 mt-10 ">
         <h2 className="text-3xl lg:text-6xl text-center font-extrabold">
           <span className="bg-linear-to-r from-green-500 to-purple-800 bg-clip-text text-transparent uppercase">
             Civic.Ai
@@ -13,7 +13,7 @@ const Banner = () => {
         <p className="py-4 text-center">
           Turning citizen voices into actionable reports
         </p>
-      {/* button design  */}
+      {/* button design */}
         <div className="flex justify-center items-center my-4">
          <Link href="/">
           <button className="relative px-6 py-3 font-semibold text-black rounded-full overflow-hidden group animate-pulse-glow">
