@@ -19,7 +19,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6 font-medium">
-          <Link href="/add-complaint" className="hover:text-green-500 transition">
+          <Link href="/complaintForm" className="hover:text-green-500 transition">
             Add Complaint
           </Link>
           <Link href="/dashboard" className="hover:text-purple-500 transition">
@@ -39,7 +39,7 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden bg-black/80 backdrop-blur-md px-4 pb-4 space-y-3 text-center">
           <Link
-            href="/add-complaint"
+            href="/complaintForm"
             className="block py-2 hover:text-green-400"
             onClick={() => setOpen(false)}
           >

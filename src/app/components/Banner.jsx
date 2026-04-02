@@ -15,7 +15,7 @@ const Banner = () => {
         </p>
       {/* button design */}
         <div className="flex justify-center items-center my-4">
-         <Link href="/">
+         <Link href="/complaintForm">
           <button className="relative px-6 py-3 font-semibold text-black rounded-full overflow-hidden group animate-pulse-glow">
             <span className="relative z-10">Send Complaints <FiSend className="inline"/></span>
 
