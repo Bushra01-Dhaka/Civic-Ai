@@ -1,4 +1,3 @@
-
 "use client";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -6,6 +5,8 @@ import { useState } from "react";
 const page = () => {
   const { register, handleSubmit, watch } = useForm();
   const [today] = useState(new Date().toISOString().split("T")[0]);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState("");
 
   const selectedCity = watch("city");
 
@@ -15,21 +16,36 @@ const page = () => {
     south: ["Zone A", "Zone B", "Zone C", "Zone D", "Zone E"],
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
     // Later: send to AI API
+    setLoading(true);
+    setResult("");
+
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const resultData = await res.json();
+      setResult(resultData.result);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="relative min-h-screen px-4 py-20 lg:py-30 flex justify-center items-center">
       <div className="w-full max-w-3xl bg-black/60 backdrop-blur-md p-6 rounded-2xl shadow-2xl animate-pulse-glow">
-
-        <h2 className="text-2xl font-bold mb-8 text-center">
-          Report an Issue
-        </h2>
+        <h2 className="text-2xl font-bold mb-8 text-center">Report an Issue</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
           {/* Name */}
           <input
             {...register("name", { required: true })}
@@ -56,10 +72,20 @@ const page = () => {
             <p className="mb-2">City Corporation *</p>
             <div className="flex gap-4">
               <label>
-                <input type="radio" value="north" {...register("city", { required: true })} /> Dhaka North
+                <input
+                  type="radio"
+                  value="north"
+                  {...register("city", { required: true })}
+                />{" "}
+                Dhaka North
               </label>
               <label>
-                <input type="radio" value="south" {...register("city", { required: true })} /> Dhaka South
+                <input
+                  type="radio"
+                  value="south"
+                  {...register("city", { required: true })}
+                />{" "}
+                Dhaka South
               </label>
             </div>
           </div>
@@ -103,7 +129,9 @@ const page = () => {
             <option>Garbage Problem</option>
             <option>Water Logging</option>
             <option>Street Light Issue</option>
-            <option>Criminal Activities( hijacking, robbery, and stealing)</option>
+            <option>
+              Criminal Activities( hijacking, robbery, and stealing)
+            </option>
             <option>Others</option>
           </select>
 
@@ -133,20 +161,31 @@ const page = () => {
         </form>
       </div>
 
+      {/* Show AI Responses Here After submitting the form */}
+      {loading && <p className="text-center mt-4">Generating complaint...</p>}
+
+      {result && (
+        <div className="mt-6 p-4 rounded-lg border border-gray-600 bg-black/50">
+          <h3 className="font-semibold mb-2">Generated Complaint:</h3>
+          <pre className="whitespace-pre-wrap text-sm">{result}</pre>
+
+          <button
+            onClick={() => navigator.clipboard.writeText(result)}
+            className="mt-3 px-4 py-2 bg-green-500 rounded-lg"
+          >
+            Copy
+          </button>
+        </div>
+      )}
 
 
 
-
-
-
-    {/* background radient design stuff */}
+      {/* background radient design stuff */}
       <div className="absolute right-16 top-0 hidden lg:block">
         <div className="w-[300px] h-[300px] rounded-full bg-green-400 opacity-30 blur-3xl animate-color-fast">
           <div className="w-[100px] h-[100px]  rounded-full shadow-2xl shadow-green-500"></div>
         </div>
       </div>
-
-
     </div>
   );
 };

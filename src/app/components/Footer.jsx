@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-black/80 backdrop-blur-md border-t border-white/10 ">
+    <div className="bg-black/80 backdrop-blur-md border-t border-white/10 ">
       <div className="max-w-6xl mx-auto px-4 py-10">
 
         {/* Top Section */}
@@ -57,7 +57,7 @@ const Footer = () => {
           © {new Date().getFullYear()} Civic.Ai — Built for Hackathon 🚀
         </div>
       </div>
-    </footer>
+    </div>
   );
 };
 
